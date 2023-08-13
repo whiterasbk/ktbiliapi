@@ -5,6 +5,8 @@ val ktor_version = "2.3.3"
 plugins {
     kotlin("jvm") version "1.8.21"
     kotlin("plugin.serialization") version "1.8.21"
+    `java-library`
+    `maven-publish`
     application
 }
 
@@ -35,6 +37,17 @@ tasks.test {
 
 tasks.withType<KotlinCompile> {
     kotlinOptions.jvmTarget = "1.8"
+}
+
+publishing {
+    publications {
+        create<MavenPublication>("release") {
+            groupId = "com.github.whiterasbk"
+            artifactId = "ktbiliapi"
+            version = "0.1"
+            from(components["kotlin"])
+        }
+    }
 }
 
 application {
