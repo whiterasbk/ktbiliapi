@@ -21,14 +21,32 @@ fun addCookie(cookie: String, headers: MutableMap<String, String>) {
     }
 }
 
-var localBeforeGetMethodHandler: BeforeGetMethodHandler = DefaultBeforeGetMethodHandler()
+/**
+ * 全局私有处理器
+ * @see BeforeGetMethodHandler
+ */
+private var localBeforeGetMethodHandler: BeforeGetMethodHandler = DefaultBeforeGetMethodHandler()
 
+/**
+ * 签名和头请求前处理器
+ *
+ * 该类代表在 GET 方法之前, 对其中的 参数(Parameter)和头(Header) 进行调整的动作
+ *
+ * 简单来说 只要调用了 [warpGetConnectUrlWithParams] 来对 [GetContextEntity] 进行设置, 在设置完成以后, 会再调用
+ *
+ * [BeforeGetMethodHandler] 的 [handleParams] 和 [handleHeader] 分别对 parameters 和 headers 进行处理, 然后才传递给 [getMethod] 进行最后的请求操作
+ *
+ * 以此来实现 对参数的调整 如添加新参数, 签名等, 对头的调整 如添加 Cookie, 设置 UA 等
+ */
 interface BeforeGetMethodHandler {
     suspend fun handleParams(params: MutableMap<String, String>)
 
     suspend fun handleHeader(header: MutableMap<String, String>)
 }
 
+/**
+ * [localBeforeGetMethodHandler] 的默认值, 对于参数和头什么都不做
+ */
 class DefaultBeforeGetMethodHandler : BeforeGetMethodHandler {
     override suspend fun handleParams(params: MutableMap<String, String>) {}
 
@@ -36,7 +54,22 @@ class DefaultBeforeGetMethodHandler : BeforeGetMethodHandler {
 }
 
 /**
- * 代表序列操作 参数和头的工厂
+ * 序列操作签名和头请求前处理器产生工厂
+ *
+ * 可以添加多个对参数和头的处理
+ *
+ * 使用方式:
+ * ```kotlin
+ * val factory = SequenceOperateBGMHandlerFactory()
+ * factory.addOperateParams { params ->
+ *      // 对 参数进行处理
+ * }
+ * factory.addOperateHeaders { headers ->
+ *      // 对 请求头进行处理
+ * }
+ * // 获取 handler
+ * val handler = factory.getHandler()
+ * ```
  */
 class SequenceOperateBGMHandlerFactory {
     private val actionsForParams: MutableList<suspend (MutableMap<String, String>) -> Unit> = mutableListOf()
@@ -61,6 +94,9 @@ class SequenceOperateBGMHandlerFactory {
     }
 }
 
+/**
+ * Get 请求 的配置对象
+ */
 data class GetContextEntity(
     var baseUrl: String = "",
     var params: MutableMap<String, String> = mutableMapOf(),
@@ -89,6 +125,10 @@ data class GetContextEntity(
     }
 }
 
+/**
+ * 在自己的作用域切换 [localBeforeGetMethodHandler] 实例为自己提供的 [BeforeGetMethodHandler]
+ *
+ */
 suspend fun <R> usingBGMHandler(handler: BeforeGetMethodHandler, block: suspend () -> R): R {
     val mutex = Mutex()
     val returnValue: R

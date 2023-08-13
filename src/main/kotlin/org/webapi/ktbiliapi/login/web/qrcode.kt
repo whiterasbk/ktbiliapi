@@ -52,7 +52,6 @@ fun getUserCtxFromParse(urlString: String): QRUserContext {
 
 suspend fun getLoginQRCodeResponseBody(): LoginQRCodeResponseBody = getMethod {
     baseUrl = "https://passport.bilibili.com/x/passport-login/web/qrcode/generate"
-    // datafyClient.get("https://passport.bilibili.com/x/passport-login/web/qrcode/generate").body()
 }
 
 
@@ -67,6 +66,36 @@ class QRCodeExpiredException : Exception("qrcode has been expired")
 
 class LostQRCodeException : Exception("qrcode key should not be null")
 
+
+/**
+ * 通过网页端扫码登录的实现类
+ *
+ * 登录的步骤如下:
+ * ```kotlin
+ * runBlocking {
+ *      // 1. 创建 LoginViaQRCodeMethod 对象
+ *      val viaQRCode = LoginViaQRCodeMethod()
+ *      // 2. 调用 getQRCodeUrl() 获取链接地址, 该地址有效期是 180s
+ *      val url = viaQRCode.getQRCodeUrl()
+ *      // 3. 根据链接生成二维码并展示
+ *      File("path/to/qrcode.jpg").writeBytes(QRCode.from(url).to(ImageType.JPG).stream().toByteArray())
+ *      println("获取二维码成功, 请打开 path/to/qrcode.jpg 使用客户端扫码")
+ *
+ *      var state = ""
+ *      // 4. 调用 login 方法等待客户端扫码, 一旦扫码确认登录会得到存储用户登录信息的上下文对象, 可以使用在其他需要登录的场景
+ *      val ctx = viaQRCode.login {
+ *          if (state != it)
+ *          println("登录状态: $it")
+ *          state = it
+ *      }
+ *
+ *      // 5. 持久化保存用户登录信息
+ *      val json = Json.encodeToString(ctx)
+ *      File("path/to/login.json").writeText(json)
+ *      println("登录信息已存入 src/test/resources/login/login.json")
+ * }
+ * ```
+ */
 class LoginViaQRCodeMethod {
 
     private var url: String? = null
