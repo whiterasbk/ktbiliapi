@@ -22,13 +22,13 @@ dependencies {
     testImplementation(kotlin("test"))
     testImplementation("org.json:json:20230227")
     testImplementation("javazoom:jlayer:1.0.1")
+    testImplementation("com.github.kenglxn.QRGen:javase:3.0.1")
 
     implementation("io.ktor:ktor-client-core:$ktor_version")
     implementation("io.ktor:ktor-client-cio:$ktor_version")
     implementation("io.ktor:ktor-client-content-negotiation:$ktor_version")
     implementation("io.ktor:ktor-serialization-kotlinx-json:$ktor_version")
 
-    implementation("com.github.kenglxn.QRGen:javase:3.0.1")
 }
 
 tasks.test {
