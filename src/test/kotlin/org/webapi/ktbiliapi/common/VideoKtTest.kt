@@ -31,8 +31,7 @@ internal class VideoKtTest {
 
     @Test
     fun getActualVideoUrlSample() = runBlocking {
-        val responseBody = getDashResponseBodies("BV1HX4y177gi").first()
-        val url = getVideoStreamUrl(responseBody) {
+        val url = getDashResponseBodies("BV1HX4y177gi").first().videoStreamUrl {
             it.last()
         }
     }
