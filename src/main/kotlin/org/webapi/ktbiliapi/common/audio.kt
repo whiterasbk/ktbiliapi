@@ -20,3 +20,8 @@ fun getAudioStreamUrl(
     return responseBody.data.dash.audio.first { it.id == quality.code }.baseUrl
 }
 
+/**
+ * @see getAudioStreamUrl
+ */
+fun DashResponseBody.audioStreamUrl(quality: AudioQuality = AudioQuality.Q64K) = getAudioStreamUrl(this, quality)
+

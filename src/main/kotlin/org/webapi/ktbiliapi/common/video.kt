@@ -45,7 +45,6 @@ suspend fun getDashResponseBodies(avid: Long, fnval: Int = 16): List<DashRespons
  */
 suspend fun getDashResponseBodies(bvid: String, fnval: Int = 16): List<DashResponseBody> = getDashResponseBodies(bvid.toav(), fnval)
 
-
 /**
  * 从 dash 流中获取视频拉流地址
  *
@@ -68,3 +67,8 @@ fun getVideoStreamUrl(
 ): String {
     return responseBody.data.dash.video.first { it.id == filterQuality(responseBody.data.dash.video.map {v -> v.id }) }.baseUrl
 }
+
+/**
+ * @see getVideoStreamUrl
+ */
+fun DashResponseBody.videoStreamUrl(filterQuality: (List<Int>) -> Int = { it.first() }) = getVideoStreamUrl(this, filterQuality)
