@@ -16,7 +16,7 @@ internal class AudioKtTest {
             val bodies = getDashResponseBodies("BV1HX4y177gi")
 
             bodies.forEach {
-                val url = getActualAudioUrl(it)
+                val url = getAudioStreamUrl(it)
                 println(url)
 
                 val audioUrl = URL(url)

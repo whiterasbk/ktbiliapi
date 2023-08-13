@@ -30,7 +30,7 @@
     // 获取这个视频的第 1P
     val responseBody = getDashResponseBodies("bv").first()
     // 获取视频流的真实地址
-    val url = getActualVideoUrl(responseBody)
+    val url = getVideoStreamUrl(responseBody)
     ```
 
 2. 登录
@@ -49,5 +49,5 @@
    val responseBody = login {
       getDashResponseBodies("bv").first()
    }
-   val url = getActualVideoUrl(responseBody)
+   val url = getVideoStreamUrl(responseBody)
    ```

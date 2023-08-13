@@ -10,10 +10,10 @@ enum class AudioQuality(val code: Int) {
  * 从 [DashResponseBody] 中获取音频拉流地址
  * @param responseBody
  * @param quality 音频的质量, 值见 [AudioQuality]
- * @return 该音频流对应的地址, 有效期一般只有 120min, 注意事项见 [getActualVideoUrl]
- * @see [getActualVideoUrl]
+ * @return 该音频流对应的地址, 有效期一般只有 120min, 注意事项见 [getVideoStreamUrl]
+ * @see [getVideoStreamUrl]
  */
-fun getActualAudioUrl(
+fun getAudioStreamUrl(
     responseBody: DashResponseBody,
     quality: AudioQuality = AudioQuality.Q64K
 ): String {

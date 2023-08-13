@@ -62,7 +62,7 @@ suspend fun getDashResponseBodies(bvid: String, fnval: Int = 16): List<DashRespo
  * @param filterQuality 回调函数, 一般情况下 [responseBody] 里会有很多不同质量的流, 该 lambda 会将所有视频质量对应的 id map成一个 List 供使用者选择, 使用者只需在该 lambda 中返回其中一个 id 即可
  * @return 该视频流对应的地址, 有效期一般只有 120min
  */
-fun getActualVideoUrl(
+fun getVideoStreamUrl(
     responseBody: DashResponseBody,
     filterQuality: (List<Int>) -> Int = { it.first() }
 ): String {
