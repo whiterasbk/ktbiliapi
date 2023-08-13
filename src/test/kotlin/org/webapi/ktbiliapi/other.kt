@@ -52,10 +52,10 @@ suspend fun maina() {
     }
 
     usingBGMHandler(fac.getHandler()) {
-        getMethod {
+        getMethod<String> {
             baseUrl = ""
-
         }
+        ""
     }
 
     val wbi = createWbiSignContext()

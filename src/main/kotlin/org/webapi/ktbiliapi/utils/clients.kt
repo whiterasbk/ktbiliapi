@@ -89,14 +89,17 @@ data class GetContextEntity(
     }
 }
 
-suspend fun usingBGMHandler(handler: BeforeGetMethodHandler, block: suspend () -> Unit) {
+suspend fun <R> usingBGMHandler(handler: BeforeGetMethodHandler, block: suspend () -> R): R {
     val mutex = Mutex()
+    val returnValue: R
     mutex.withLock {
         val inner = localBeforeGetMethodHandler
         localBeforeGetMethodHandler = handler
-        block()
+        returnValue = block()
         localBeforeGetMethodHandler = inner
     }
+
+    return returnValue
 }
 
 suspend fun warpGetConnectUrlWithParams(block: GetContextEntity.() -> Unit): GetContextEntity {
