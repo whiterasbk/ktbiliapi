@@ -1,10 +1,9 @@
 package org.webapi.ktbiliapi
 
 import kotlinx.serialization.json.Json
-import org.webapi.ktbiliapi.common.getDashResponseBodies
-import org.webapi.ktbiliapi.dsl.createWbiSignContext
+import org.webapi.ktbiliapi.dsl.usingWbiSign
+import org.webapi.ktbiliapi.dsl.usingWebQRCodeLogin
 import org.webapi.ktbiliapi.login.web.addQRCodeUserCookies
-import org.webapi.ktbiliapi.sign.WBICache
 import org.webapi.ktbiliapi.sign.signViaWbiCached
 import org.webapi.ktbiliapi.utils.SequenceOperateBGMHandlerFactory
 import org.webapi.ktbiliapi.utils.getMethod
@@ -12,7 +11,6 @@ import org.webapi.ktbiliapi.utils.usingBGMHandler
 
 import java.nio.charset.StandardCharsets
 import java.security.KeyFactory
-import java.security.PublicKey
 import java.security.spec.X509EncodedKeySpec
 import java.util.Base64
 import javax.crypto.Cipher
@@ -63,7 +61,7 @@ suspend fun maina() {
         ""
     }
 
-    val wbi = createWbiSignContext()
+    val wbi = usingWbiSign()
 
     wbi {
 

@@ -44,8 +44,8 @@
    
 3. 登录状态下获取视频流地址
    ```kotlin
-   // 使用网页端二维码登录过程中获取到的 userContext
-   val login = createWebQRCodeLoginContext(userContext)
+   // 使用网页端二维码登录过程中获取到的 userContext, 并且使用 Wbi 对参数进行签名
+   val login = usingWbiSign() + usingWebQRCodeLogin(userContext)
    val responseBody = login {
       getDashResponseBodies("bv").first()
    }

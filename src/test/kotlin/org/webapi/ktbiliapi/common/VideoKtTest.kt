@@ -2,8 +2,8 @@ package org.webapi.ktbiliapi.common
 
 import kotlinx.coroutines.runBlocking
 import org.junit.jupiter.api.Test
-import org.webapi.ktbiliapi.dsl.createAppKeySignContext
-import org.webapi.ktbiliapi.dsl.createWbiSignContext
+import org.webapi.ktbiliapi.dsl.usingAppKeySign
+import org.webapi.ktbiliapi.dsl.usingWbiSign
 import org.webapi.ktbiliapi.sign.AppKeySec
 
 internal class VideoKtTest {
@@ -11,10 +11,10 @@ internal class VideoKtTest {
     @Test
     fun testGetActualVideoUrl() = runBlocking {
 
-        val wbi = createWbiSignContext()
+        val wbi = usingWbiSign()
 
 
-        val app = createAppKeySignContext(AppKeySec.AndroidVideoStream)
+        val app = usingAppKeySign(AppKeySec.AndroidVideoStream)
 
         wbi {
             val bodies = getDashResponseBodies("BV1HX4y177gi")

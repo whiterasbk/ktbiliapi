@@ -3,7 +3,7 @@ package org.webapi.ktbiliapi.common
 import javazoom.jl.player.advanced.AdvancedPlayer
 import kotlinx.coroutines.runBlocking
 import org.junit.jupiter.api.Test
-import org.webapi.ktbiliapi.dsl.createWbiSignContext
+import org.webapi.ktbiliapi.dsl.usingWbiSign
 import java.io.BufferedInputStream
 import java.net.URL
 
@@ -11,7 +11,7 @@ internal class AudioKtTest {
 
     @Test
     fun testGetActualAudioUrl() = runBlocking {
-        val wbi = createWbiSignContext()
+        val wbi = usingWbiSign()
         wbi {
             val bodies = getDashResponseBodies("BV1HX4y177gi")
 

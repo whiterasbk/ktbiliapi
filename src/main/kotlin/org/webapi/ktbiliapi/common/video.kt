@@ -1,8 +1,8 @@
 package org.webapi.ktbiliapi.common
 
 import org.webapi.ktbiliapi.serializable.DashResponseBody
+import org.webapi.ktbiliapi.utils.av
 import org.webapi.ktbiliapi.utils.getMethod
-import org.webapi.ktbiliapi.utils.toav
 
 /**
  * 获取视频的 dash 流信息
@@ -25,7 +25,7 @@ suspend fun getDashResponseBody(avid: Long, cid: Long, fnval: Int = 16): DashRes
  * @param fnval 清晰度, 默认为 16
  * @return [DashResponseBody] 数据类, 包含了该 api 所有的返回信息
  */
-suspend fun getDashResponseBody(bvid: String, cid: Long, fnval: Int = 16): DashResponseBody = getDashResponseBody(bvid.toav(), cid, fnval)
+suspend fun getDashResponseBody(bvid: String, cid: Long, fnval: Int = 16): DashResponseBody = getDashResponseBody(bvid.av, cid, fnval)
 
 /**
  * 获取视频所有分P的 dash 流信息
@@ -43,7 +43,7 @@ suspend fun getDashResponseBodies(avid: Long, fnval: Int = 16): List<DashRespons
  * @param fnval 清晰度, 默认为 16
  * @return 返回一个列表, 该列表包含每P 的 [DashResponseBody] 数据类
  */
-suspend fun getDashResponseBodies(bvid: String, fnval: Int = 16): List<DashResponseBody> = getDashResponseBodies(bvid.toav(), fnval)
+suspend fun getDashResponseBodies(bvid: String, fnval: Int = 16): List<DashResponseBody> = getDashResponseBodies(bvid.av, fnval)
 
 /**
  * 从 dash 流中获取视频拉流地址

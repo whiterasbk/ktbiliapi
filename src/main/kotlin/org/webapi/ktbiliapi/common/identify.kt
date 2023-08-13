@@ -1,8 +1,8 @@
 package org.webapi.ktbiliapi.common
 
 import org.webapi.ktbiliapi.serializable.CidResponseBody
+import org.webapi.ktbiliapi.utils.av
 import org.webapi.ktbiliapi.utils.getMethod
-import org.webapi.ktbiliapi.utils.toav
 
 /**
  * 获取视频分P的cid
@@ -25,4 +25,4 @@ suspend fun getCidList(avid: Long): List<Long> {
 /**
  * 根据视频的 [bvid] 获取其所有分P的 cid
  */
-suspend fun getCidList(bvid: String): List<Long> = getCidList(bvid.toav())
+suspend fun getCidList(bvid: String): List<Long> = getCidList(bvid.av)
