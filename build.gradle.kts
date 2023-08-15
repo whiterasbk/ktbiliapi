@@ -23,18 +23,17 @@ dependencies {
     testImplementation("org.json:json:20230227")
     testImplementation("javazoom:jlayer:1.0.1")
     testImplementation("com.github.kenglxn.QRGen:javase:3.0.1")
+// https://mvnrepository.com/artifact/cn.edu.hfut.dmic.webcollector/WebCollector
+    testImplementation("cn.edu.hfut.dmic.webcollector:WebCollector:2.74-alpha")
+    // https://mvnrepository.com/artifact/net.sourceforge.htmlunit/htmlunit
+    testImplementation("net.sourceforge.htmlunit:htmlunit:2.70.0")
+
 
     implementation("io.ktor:ktor-client-core:$ktor_version")
     implementation("io.ktor:ktor-client-cio:$ktor_version")
     implementation("io.ktor:ktor-client-content-negotiation:$ktor_version")
     implementation("io.ktor:ktor-serialization-kotlinx-json:$ktor_version")
     implementation("io.ktor:ktor-client-encoding:$ktor_version")
-    // https://mvnrepository.com/artifact/cn.edu.hfut.dmic.webcollector/WebCollector
-    implementation("cn.edu.hfut.dmic.webcollector:WebCollector:2.74-alpha")
-    // https://mvnrepository.com/artifact/net.sourceforge.htmlunit/htmlunit
-    implementation("net.sourceforge.htmlunit:htmlunit:2.70.0")
-
-
 }
 
 tasks.test {
