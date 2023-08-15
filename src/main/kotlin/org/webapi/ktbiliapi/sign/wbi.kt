@@ -7,6 +7,7 @@ import io.ktor.client.request.*
 import io.ktor.serialization.kotlinx.json.*
 import kotlinx.serialization.json.Json
 import org.webapi.ktbiliapi.serializable.WbiResponseBody
+import org.webapi.ktbiliapi.utils.GetMethodConfig
 import org.webapi.ktbiliapi.utils.getMethod
 import org.webapi.ktbiliapi.utils.md5
 import java.net.URLEncoder
@@ -25,9 +26,8 @@ private val mixinKeyEncTab = intArrayOf(
     36, 20, 34, 44, 52
 )
 
-suspend fun getWbiResponseBody(): WbiResponseBody = getMethod(true) {
+suspend fun getWbiResponseBody(): WbiResponseBody = getMethod(GetMethodConfig(true)) {
     baseUrl = "https://api.bilibili.com/x/web-interface/nav"
-//    datafyClient.get("https://api.bilibili.com/x/web-interface/nav").body()
 }
 
 suspend fun getWebImg() = getWbiResponseBody().let { it.data.wbi_img.img_url to it.data.wbi_img.sub_url }

@@ -2,7 +2,10 @@ package org.webapi.ktbiliapi.utils
 
 import io.ktor.client.*
 import io.ktor.client.call.*
+import io.ktor.client.engine.*
+import io.ktor.client.engine.cio.*
 import io.ktor.client.plugins.*
+import io.ktor.client.plugins.compression.*
 import io.ktor.client.plugins.contentnegotiation.*
 import io.ktor.client.request.*
 import io.ktor.http.*
@@ -11,7 +14,7 @@ import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 import kotlinx.serialization.json.Json
 import org.webapi.ktbiliapi.serializable.CommonResponseBody
-import java.util.StringJoiner
+import java.util.*
 
 fun addCookie(cookie: String, headers: MutableMap<String, String>) {
     headers["Cookie"]?.let {
@@ -152,14 +155,16 @@ suspend fun warpGetConnectUrlWithParams(block: GetContextEntity.() -> Unit): Get
 
 class BiliApiException(val code: Int, val msg: String) : Exception(msg)
 
-suspend inline fun <reified T> getMethodReturningHeaders(ignoreErrCode: Boolean = false, noinline block: GetContextEntity.() -> Unit): Pair<T, Headers> {
-    val ctx = warpGetConnectUrlWithParams(block)
+class GetMethodConfig (
 
-    // println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>" + ctx.headers)
-    // println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>" + ctx.baseUrl)
-    // println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>" + ctx.params)
+    /**
+     * 会判断 api 返回的 json 中字段 code 是否不为 0, 如果不为 0 则抛 [BiliApiException] 异常
+     *
+     * 当返回的结构不是 json 时应该设置为 true
+     */
+    val ignoreBiliErrCode: Boolean = false,
 
-    return HttpClient {
+    val client: HttpClient = HttpClient {
         install(ContentNegotiation) {
             json(Json {
                 prettyPrint = true
@@ -167,31 +172,45 @@ suspend inline fun <reified T> getMethodReturningHeaders(ignoreErrCode: Boolean 
                 ignoreUnknownKeys = true
             })
         }
-    }.config { BrowserUserAgent() }.use {
+
+        BrowserUserAgent()
+
+        headers {
+            append("Referer", "https://www.bilibili.com")
+        }
+
+        defaultRequest {
+            accept(ContentType.Application.Any)
+        }
+    }
+)
+
+suspend inline fun <reified T> getMethodReturningHeaders(
+    config: GetMethodConfig = GetMethodConfig(),
+    noinline block: GetContextEntity.() -> Unit
+): Pair<T, Headers> {
+    val ctx = warpGetConnectUrlWithParams(block)
+
+    return config.client.use {
 
         val response = it.get(ctx.baseUrl) {
             ctx.params.forEach { (k, v) -> parameter(k, v) }
             ctx.headers.forEach { (k, v) -> header(k, v) }
-            header("Referer", "https://www.bilibili.com")
         }
 
         val headers = response.headers
         val body = response.body<T>()
 
-        if (!ignoreErrCode) {
+        if (!config.ignoreBiliErrCode) {
             val rb = body as CommonResponseBody
             if (rb.iCode != 0) throw BiliApiException(rb.iCode, rb.iMessage)
         }
-
-//        if (response.status.value == 404) {
-//            throw Exception("404")
-//        }
 
         body to headers
     }
 }
 
-suspend inline fun <reified T> getMethod(ignoreErrCode: Boolean = false, noinline block: GetContextEntity.() -> Unit): T {
-    return getMethodReturningHeaders<T>(ignoreErrCode, block).first
+suspend inline fun <reified T> getMethod(config: GetMethodConfig = GetMethodConfig(), noinline block: GetContextEntity.() -> Unit): T {
+    return getMethodReturningHeaders<T>(config, block).first
 }
 
