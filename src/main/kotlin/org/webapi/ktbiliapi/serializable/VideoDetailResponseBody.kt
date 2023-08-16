@@ -28,7 +28,7 @@ data class VideoDetailData(
     val dimension: Dimension,
     val duration: Int,
     val dynamic: String,
-    val honor_reply: HonorReply,
+    val honor_reply: HonorReply? = null,
     val is_chargeable_season: Boolean,
     val is_season_display: Boolean,
     val is_story: Boolean,
@@ -62,7 +62,7 @@ data class DescV2(
 
 @Serializable
 data class HonorReply(
-    val honor: List<Honor>
+    val honor: List<Honor>? = null
 )
 
 @Serializable

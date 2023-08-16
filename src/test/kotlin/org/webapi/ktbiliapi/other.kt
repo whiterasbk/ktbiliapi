@@ -23,7 +23,7 @@ import org.webapi.ktbiliapi.utils.*
 import java.io.File
 
 suspend fun main() {
-    val rb = getVideoDetail("BV1jj411d7Ao")
+    val rb = getVideoDetail("BV1X44y1c7h3")
     println(rb)
 }
 
