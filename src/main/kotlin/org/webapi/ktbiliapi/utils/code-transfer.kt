@@ -15,33 +15,47 @@ private fun power(a: Int, b: Int): Long {
     return power
 }
 
+class AvConvertException(message: String?, val originException: Exception): Exception(message)
+
+class BvConvertException(message: String?, val originException: Exception): Exception(message)
+
 val String.av: Long
     get() {
-        val map = HashMap<String, Int>()
-        var r: Long = 0
-        // 58进制转换
-        for (i in 0..57)
-            map[table.substring(i, i + 1)] = i
+        try {
+            val map = HashMap<String, Int>()
+            var r: Long = 0
+            // 58进制转换
+            for (i in 0..57)
+                map[table.substring(i, i + 1)] = i
 
-        for (i in 0..5)
-            r += map[this.substring(magicArray[i], magicArray[i] + 1)]!! * power(58, i)
+            for (i in 0..5)
+                r += map[this.substring(magicArray[i], magicArray[i] + 1)]!! * power(58, i)
 
-        //转换完成后，需要处理，带上两个随机数
-        return r - add xor xor
+            //转换完成后，需要处理，带上两个随机数
+            return r - add xor xor
+        } catch (e: Exception) {
+            // 包一层错误
+            throw AvConvertException(e.message, e)
+        }
     }
 
 val Long.bv: String
     get() {
-        val map = HashMap<Int, String>()
-        val sb = StringBuffer("BV1  4 1 7  ")
-        // 逆向思路，先将随机数还原
-        val new = (this xor xor) + add
-        // 58 进制转回
-        for (i in 0..57)
-            map[i] = table.substring(i, i + 1)
+        try {
+            val map = HashMap<Int, String>()
+            val sb = StringBuffer("BV1  4 1 7  ")
+            // 逆向思路，先将随机数还原
+            val new = (this xor xor) + add
+            // 58 进制转回
+            for (i in 0..57)
+                map[i] = table.substring(i, i + 1)
 
-        for (i in 0..5)
-            sb.replace(magicArray[i], magicArray[i] + 1, map[(new / power(58, i) % 58).toInt()]!!)
+            for (i in 0..5)
+                sb.replace(magicArray[i], magicArray[i] + 1, map[(new / power(58, i) % 58).toInt()]!!)
 
-        return sb.toString()
+            return sb.toString()
+        } catch (e: Exception) {
+            // 包一层错误
+            throw BvConvertException(e.message, e)
+        }
     }
