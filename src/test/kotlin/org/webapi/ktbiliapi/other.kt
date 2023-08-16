@@ -8,7 +8,6 @@ import cn.edu.hfut.dmic.webcollector.plugin.berkeley.BreadthCrawler
 import com.gargoylesoftware.htmlunit.WebClient
 import com.gargoylesoftware.htmlunit.html.HtmlPage
 import com.gargoylesoftware.htmlunit.util.Cookie
-import getCorrespondPath
 import io.ktor.client.*
 import io.ktor.client.plugins.compression.*
 import io.ktor.client.statement.*
@@ -19,10 +18,7 @@ import org.webapi.ktbiliapi.dsl.usingWebQRCodeLogin
 import org.webapi.ktbiliapi.login.web.QRUserContext
 import org.webapi.ktbiliapi.login.web.addQRCodeUserCookies
 import org.webapi.ktbiliapi.sign.signViaWbiCached
-import org.webapi.ktbiliapi.utils.GetMethodConfig
-import org.webapi.ktbiliapi.utils.SequenceOperateBGMHandlerFactory
-import org.webapi.ktbiliapi.utils.getMethod
-import org.webapi.ktbiliapi.utils.usingBGMHandler
+import org.webapi.ktbiliapi.utils.*
 import java.io.File
 
 

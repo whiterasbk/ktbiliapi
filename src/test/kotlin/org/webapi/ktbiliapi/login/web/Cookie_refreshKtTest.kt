@@ -1,10 +1,10 @@
 package org.webapi.ktbiliapi.login.web
 
-import getCorrespondPath
 import kotlinx.coroutines.runBlocking
 import org.junit.jupiter.api.Test
 
 import org.junit.jupiter.api.Assertions.*
+import org.webapi.ktbiliapi.utils.getCorrespondPath
 import java.io.BufferedReader
 import java.io.InputStreamReader
 import java.net.URL

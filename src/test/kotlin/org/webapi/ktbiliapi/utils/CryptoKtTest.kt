@@ -1,18 +1,14 @@
 package org.webapi.ktbiliapi.utils
 
-import getCorrespondPath
 import io.ktor.client.*
 import io.ktor.client.call.*
 import io.ktor.client.engine.*
-import io.ktor.client.engine.ProxyBuilder.http
 import io.ktor.client.request.*
 import io.ktor.http.*
 import kotlinx.coroutines.runBlocking
-import kotlinx.serialization.json.Json
-import kotlinx.serialization.json.JsonObject
 import org.json.JSONObject
+import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.Assertions.*
 import java.time.Instant
 
 internal class CryptoKtTest {

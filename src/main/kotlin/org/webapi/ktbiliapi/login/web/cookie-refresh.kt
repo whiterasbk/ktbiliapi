@@ -1,11 +1,11 @@
 package org.webapi.ktbiliapi.login.web
 
-import getCorrespondPath
 import io.ktor.client.call.*
 import io.ktor.client.statement.*
 import io.ktor.util.*
 import io.ktor.utils.io.*
 import org.webapi.ktbiliapi.utils.GetMethodConfig
+import org.webapi.ktbiliapi.utils.getCorrespondPath
 import org.webapi.ktbiliapi.utils.getMethod
 import java.nio.ByteBuffer
 
