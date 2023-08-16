@@ -1,6 +1,7 @@
 package org.webapi.ktbiliapi.serializable
 
 import kotlinx.serialization.Serializable
+import org.webapi.ktbiliapi.serializable.common.Dimension
 
 @Serializable
 data class CidResponseBody (
@@ -26,11 +27,4 @@ data class CidQueryData(
     val part: String,
     val vid: String,
     val weblink: String
-)
-
-@Serializable
-data class Dimension(
-    val height: Int,
-    val rotate: Int,
-    val width: Int
 )

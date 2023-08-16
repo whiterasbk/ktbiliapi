@@ -6,7 +6,7 @@ import org.webapi.ktbiliapi.dsl.usingAppKeySign
 import org.webapi.ktbiliapi.dsl.usingWbiSign
 import org.webapi.ktbiliapi.sign.AppKeySec
 
-internal class VideoKtTest {
+internal class VideoStreamKtTest {
 
     @Test
     fun testGetActualVideoUrl() = runBlocking {
