@@ -1,10 +1,14 @@
 package org.webapi.ktbiliapi.dsl
 
 import org.webapi.ktbiliapi.utils.BeforeGetMethodHandler
+import org.webapi.ktbiliapi.utils.DefaultBeforeGetMethodHandler
 import org.webapi.ktbiliapi.utils.SequenceOperateBGMHandlerFactory
 import org.webapi.ktbiliapi.utils.usingBGMHandler
+import java.sql.Wrapper
 
-class StateDSLContext(private var handler: BeforeGetMethodHandler) {
+class StateDSLContext (
+    private var handler: BeforeGetMethodHandler = DefaultBeforeGetMethodHandler()
+) {
     suspend operator fun <R> invoke(block: suspend () -> R): R {
         return usingBGMHandler(handler) {
             block()

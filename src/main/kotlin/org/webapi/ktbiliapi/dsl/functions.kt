@@ -62,3 +62,7 @@ fun usingWebQRCodeLogin(userCtx: QRUserContext): StateDSLContext {
     factory.addOperateHeaders { addQRCodeUserCookies(userCtx, it) }
     return StateDSLContext(factory.getHandler())
 }
+
+suspend inline fun <reified T> runCatchingProviding(sdc: StateDSLContext, crossinline block: suspend () -> T): Result<T> {
+    return runCatching { sdc { block() } }
+}
