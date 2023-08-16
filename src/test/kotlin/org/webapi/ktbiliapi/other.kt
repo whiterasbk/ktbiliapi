@@ -13,6 +13,7 @@ import io.ktor.client.plugins.compression.*
 import io.ktor.client.statement.*
 import io.ktor.http.*
 import kotlinx.serialization.json.Json
+import org.webapi.ktbiliapi.common.getVideoDetail
 import org.webapi.ktbiliapi.dsl.usingWbiSign
 import org.webapi.ktbiliapi.dsl.usingWebQRCodeLogin
 import org.webapi.ktbiliapi.login.web.QRUserContext
@@ -21,8 +22,12 @@ import org.webapi.ktbiliapi.sign.signViaWbiCached
 import org.webapi.ktbiliapi.utils.*
 import java.io.File
 
+suspend fun main() {
+    val rb = getVideoDetail("BV1jj411d7Ao")
+    println(rb)
+}
 
-fun main() {
+fun main2() {
     val url = "https://www.bilibili.com/correspond/1/0005dd006aee72ec103bfe256e37c74d3327aacc350274dee073edf1bc934502eb43bfecf1c87492662ceb4fdbe3313c9f4031efc3170272d710c1caaceedbaf1f41c77b2a19a1709c9eb1c7810879541aec457a82a99cc73edf0bdd091f4b0a33363acf3e4e0ba19f7220e4fa190d955b87891d064f2d40c5901f2bccf8c8c6"
 
     val webClient = WebClient()
