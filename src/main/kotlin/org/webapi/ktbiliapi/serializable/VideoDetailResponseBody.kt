@@ -18,9 +18,9 @@ data class VideoDetailResponseBody(
 
 @Serializable
 data class VideoDetailData(
-    val aid: Int,
+    val aid: Long,
     val bvid: String,
-    val cid: Int,
+    val cid: Long,
     val copyright: Int,
     val ctime: Int,
     val desc: String,
@@ -33,7 +33,7 @@ data class VideoDetailData(
     val is_season_display: Boolean,
     val is_story: Boolean,
     val like_icon: String,
-    val mission_id: Int? = null,
+    val mission_id: Long? = null,
     val no_cache: Boolean,
     val owner: Owner,
     val pages: List<Page>,
@@ -46,7 +46,7 @@ data class VideoDetailData(
     val state: Int,
     val subtitle: Subtitle,
     val teenage_mode: Int,
-    val tid: Int,
+    val tid: Long,
     val title: String,
     val tname: String,
     val user_garb: UserGarb,
@@ -55,7 +55,7 @@ data class VideoDetailData(
 
 @Serializable
 data class DescV2(
-    val biz_id: Int,
+    val biz_id: Long,
     val raw_text: String,
     val type: Int
 )
@@ -68,13 +68,13 @@ data class HonorReply(
 @Serializable
 data class Owner(
     val face: String,
-    val mid: Int,
+    val mid: Long,
     val name: String
 )
 
 @Serializable
 data class Page(
-    val cid: Int,
+    val cid: Long,
     val dimension: Dimension,
     val duration: Int,
     val from: String,
@@ -111,7 +111,7 @@ data class Staff(
     val face: String,
     val follower: Int,
     val label_style: Int,
-    val mid: Int,
+    val mid: Long,
     val name: String,
     val official: Official,
     val title: String,
@@ -120,7 +120,7 @@ data class Staff(
 
 @Serializable
 data class Stat(
-    val aid: Int,
+    val aid: Long,
     val argue_msg: String,
     val coin: Int,
     val danmaku: Int,
@@ -172,7 +172,7 @@ data class UserGarb(
 
 @Serializable
 data class Honor(
-    val aid: Int,
+    val aid: Long,
     val desc: String,
     val type: Int,
     val weekly_recommend_num: Int
